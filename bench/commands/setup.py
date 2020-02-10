@@ -309,6 +309,30 @@ def setup_systemd(user=None, yes=False, stop=False, create_symlinks=False, delet
 	generate_systemd_config(bench_path=".", user=user, yes=yes,
 		stop=stop, create_symlinks=create_symlinks, delete_symlinks=delete_symlinks)
 
+@click.command('system')
+@click.option('--database', type=click.Choice(['mariadb', 'postgres']), default='mariadb')
+@click.option('--db-version', default=None)
+@click.option('--redis', default='5')
+@click.option('--nodejs', default='12')
+@click.option('--yarn', default='1.19.1')
+def setup_system(database, db_version, nodejs, redis, yarn):
+	"""Sets up system packages essential for Frappe Environment"""
+	from bench.utils import setup_system
+	version = {
+		'mariadb': '10.3',
+		'postgres': '9.5'
+	}
+	db_version = db_version or version.get(database)
+	setup_matrix = {
+		"database": database,
+		"db_version": db_version,
+		"nodejs": nodejs,
+		"redis": redis,
+		"yarn": yarn
+	}
+	setup_system(setup_matrix)
+
+
 setup.add_command(setup_sudoers)
 setup.add_command(setup_nginx)
 setup.add_command(reload_nginx)
@@ -334,3 +358,4 @@ setup.add_command(set_ssh_port)
 setup.add_command(setup_roles)
 setup.add_command(setup_nginx_proxy_jail)
 setup.add_command(setup_systemd)
+setup.add_command(setup_system)

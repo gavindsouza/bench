@@ -984,3 +984,21 @@ def in_virtual_env():
 		return _no_global_under_venv()
 
 	return False
+
+
+def setup_system(setup_matrix):
+	from distutils.spawn import find_executable
+	import bench.commands
+	from bench.commands.install import install_nodejs, install_maridb, install_wkhtmltopdf, install_prerequisites
+
+	needed_packages = ['virtualenv', 'cron', setup_matrix['database'], 'node', 'redis-server', 'yarn', 'wkhtmltopdf']
+	not_installed_packages = [pac for pac in needed_packages if not find_executable(pac)]
+
+	if 'redis' in not_installed_packages:
+		install_prerequisites()
+
+	if 'mariadb' in not_installed_packages:
+		install_maridb(mysql_root_password='root', version=setup_matrix['db_version'])
+
+	if 'yarn' in not_installed_packages:
+		install_nodejs()
