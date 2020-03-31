@@ -36,15 +36,6 @@ jobs:
             bdist_wheel
             --universal
 
-        - name : Generate a Release Message
-          run: |
-            git fetch --all --quiet
-            git checkout develop --force
-            git reset HEAD --hard
-            export RELEASE_MSG=$( git log origin/master..origin/develop --format=%s | grep -v 'Merge' | grep -v 'readme' )
-            echo $RELEASE_MSG
-          shell: bash
-
         - name: Create Release on GitHub
           uses: actions/create-release@latest
           env:
@@ -52,7 +43,6 @@ jobs:
           with:
             tag_name: ${{ github.ref }}
             release_name: ${{ github.ref }}
-            body: ${{ env.RELEASE_MSG }}
             draft: false
             prerelease: false
 
