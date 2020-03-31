@@ -1,9 +1,11 @@
 name: On the push of a tagged commit to master, create a release and publish to PyPI
 
 on:
-  pull_request:
+  push:
     branches:
-      - 'master'
+      - 'develop'
+    tags:
+      - 'v*'
 
 jobs:
   build-n-publish:
@@ -35,7 +37,12 @@ jobs:
             --universal
 
         - name : Generate a Release Message
-          run: export RELEASE_MSG=$( git log master..develop --format=%s | grep -v 'Merge' | grep -v 'readme' )
+          run: |
+            git fetch --all --quiet
+            git checkout develop --force
+            git reset HEAD --hard
+            export RELEASE_MSG=$( git log origin/master..origin/develop --format=%s | grep -v 'Merge' | grep -v 'readme' )
+            echo $RELEASE_MSG
           shell: bash
 
         - name: Create Release on GitHub
