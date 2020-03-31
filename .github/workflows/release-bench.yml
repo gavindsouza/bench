@@ -34,6 +34,10 @@ jobs:
             bdist_wheel
             --universal
 
+        - name : Generate a Release Message
+          run: export RELEASE_MSG=$( git log master..develop --format=%s | grep -v 'Merge' | grep -v 'readme' )
+          shell: bash
+
         - name: Create Release on GitHub
           uses: actions/create-release@latest
           env:
@@ -41,7 +45,7 @@ jobs:
           with:
             tag_name: ${{ github.ref }}
             release_name: ${{ github.ref }}
-            body: $( git log master..develop --format=%s | grep -v 'Merge' | grep -v 'readme' )
+            body: ${{ env.RELEASE_MSG }}
             draft: false
             prerelease: false
 
