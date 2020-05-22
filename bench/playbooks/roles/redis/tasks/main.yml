@@ -1,6 +1,6 @@
 ---
-  - name: Install yum packages
-    yum:
+  - name: Install dnf packages
+    dnf:
       name:
         - redis
       state: present

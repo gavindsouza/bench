@@ -1,6 +1,6 @@
 ---
 - name: Install supervisor on centos
-  yum: name=supervisor state=present
+  dnf: name=supervisor state=present
   when: ansible_os_family == 'RedHat'
 
 - name: Install supervisor on debian

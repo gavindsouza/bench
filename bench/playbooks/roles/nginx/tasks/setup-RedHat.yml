@@ -2,10 +2,10 @@
 - name: Enable nginx repo.
   template:
     src: nginx.repo.j2
-    dest: /etc/yum.repos.d/nginx.repo
+    dest: /etc/dnf.repos.d/nginx.repo
     owner: root
     group: root
     mode: 0644
 
 - name: Ensure nginx is installed.
-  yum: pkg=nginx state=installed enablerepo=nginx
+  dnf: pkg=nginx state=installed enablerepo=nginx

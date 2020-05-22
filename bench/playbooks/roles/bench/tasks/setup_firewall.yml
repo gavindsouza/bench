@@ -10,7 +10,7 @@
       when: ansible_distribution == 'CentOS'
 
     - name: Install firewalld
-      yum: name=firewalld state=present
+      dnf: name=firewalld state=present
       when: ansible_distribution == 'CentOS'
 
     - name: Enable Firewall

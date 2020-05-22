@@ -1,6 +1,6 @@
 ---
 - name: Install logwatch
-  yum: name=logwatch state=present
+  dnf: name=logwatch state=present
   when: ansible_distribution == 'CentOS'
 
 - name: Install logwatch on Ubuntu or Debian

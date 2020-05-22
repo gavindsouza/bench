@@ -1,6 +1,6 @@
 ---
 - name: Install fail2ban
-  yum: name=fail2ban state=present
+  dnf: name=fail2ban state=present
   when: ansible_distribution == 'CentOS'
 
 - name: Install fail2ban

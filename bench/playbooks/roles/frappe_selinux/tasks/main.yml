@@ -1,6 +1,6 @@
 ---
 - name: Install deps
-  yum:
+  dnf:
     name:
       - policycoreutils-python
       - selinux-policy-devel

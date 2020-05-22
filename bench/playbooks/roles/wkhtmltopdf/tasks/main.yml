@@ -1,6 +1,6 @@
 ---
 - name: install base fonts
-  yum:
+  dnf:
     name:
       - libXrender
       - libXext
@@ -82,7 +82,7 @@
   when: ansible_distribution == 'Debian' and ansible_distribution_major_version == '10'
 
 - name: Install wkhtmltox rpm
-  yum:
+  dnf:
      name: /tmp/wkhtmltox.rpm
      state: present
   when: ansible_os_family == 'RedHat'

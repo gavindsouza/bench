@@ -1,6 +1,6 @@
 ---
 - name: Install ntpd
-  yum:
+  dnf:
     name:
       - ntp
       - ntpdate
